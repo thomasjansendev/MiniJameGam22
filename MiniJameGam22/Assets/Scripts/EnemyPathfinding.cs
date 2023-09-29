@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,6 +19,7 @@ public class EnemyPathfinding : MonoBehaviour
     private System.Random rnd;
     [SerializeField] private Vector2 bottomLeftCorner;
     [SerializeField] private Vector2 topRightCorner;
+    [SerializeField] private GameObject emptyGameObject;
     [SerializeField] private int rndScaleFactor;
     private int curWaypoint;
     [SerializeField] private float waypointSwitchMag;
@@ -29,7 +29,6 @@ public class EnemyPathfinding : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
-        agent.updateRotation = false;
         agent.updateUpAxis = false;
         rnd = new System.Random();
         GenerateWaypoints();
@@ -64,8 +63,18 @@ public class EnemyPathfinding : MonoBehaviour
             waypoint2 = new Vector2(x, RandomY());
         }
 
-        waypoints.Add(Instantiate(new GameObject(), waypoint1, Quaternion.identity));
-        waypoints.Add(Instantiate(new GameObject(), waypoint2, Quaternion.identity));
+        waypoints.Add(Instantiate(emptyGameObject, waypoint1, Quaternion.identity));
+        waypoints.Add(Instantiate(emptyGameObject, waypoint2, Quaternion.identity));
+    }
+
+    private void FaceTarget()
+    {
+
+        if (agent.velocity.magnitude < 0.001f)
+        {
+            return;
+        }
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, agent.velocity.normalized);
     }
 
     // Update is called once per frame
@@ -85,11 +94,11 @@ public class EnemyPathfinding : MonoBehaviour
         }
 
         agent.SetDestination(transformTarget.position);
+        FaceTarget();
+
 
         if ((transform.position - transformTarget.position).magnitude < waypointSwitchMag)
         {
-            print(waypoints[0]);
-            print(waypoints[1]);
             curWaypoint += 1;
             curWaypoint %= 2; // cycle between 0 - 1 - 0 - 1 - ...
         }
