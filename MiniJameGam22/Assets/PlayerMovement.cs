@@ -13,7 +13,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float collisionOffset = 0.05f;
     private List<RaycastHit2D> _castCollisions = new();
 
-    private bool _isMoving;
     private int _direction; // 0 for down, 1 for sideways, 2 for up
 
 
@@ -40,12 +39,6 @@ public class PlayerMovement : MonoBehaviour
                 {
                     TryMove(new Vector2(0, MovementInput.y));
                 }
-
-                _isMoving = true;
-            }
-            else
-            {
-                _isMoving = false;
             }
         }
         
