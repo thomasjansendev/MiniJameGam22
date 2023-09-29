@@ -38,8 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void Turn()
     {
-        float turnRateValue = turnRate * _turnInput; //if no input then turnRate = 0
-        Debug.Log(turnRate + " ; " + _turnInput);
+        float turnRateValue = turnRate * _turnInput; //if no input then turnRateValue = 0
         _rb.MoveRotation(_rb.rotation + turnRateValue);
     }
 
@@ -58,12 +57,12 @@ public class PlayerController : MonoBehaviour
     void OnQuit()
     {
         // def allows this to work in the editor or in regular game
-#if UNITY_STANDALONE
-        Application.Quit();
-#endif
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+    #if UNITY_STANDALONE
+            Application.Quit();
+    #endif
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #endif
     }
 
     #endregion
