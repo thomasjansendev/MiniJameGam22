@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed;
-    private Vector2 _moveDir; //to get player input vector
-    private Vector2 _moveVel; //to get resultant velocity vector
-
     private Rigidbody2D _rb;
     
+
+    [SerializeField] private float moveForce;
+    private Vector2 _moveForwardVector;
+    private float _moveInput; //to store forward/back input
+
+    [SerializeField] private float turnRate;
+    private float _turnInput;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,14 +26,33 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        _rb.AddForce(_moveVel); 
+        Accelerate();
+        Turn();
     }
-    
-    private void OnMove(InputValue value)
+
+    private void Accelerate()
+    {        
+        _moveForwardVector = transform.up * moveForce;
+        _rb.AddForce(_moveInput*_moveForwardVector);
+    }
+
+    private void Turn()
     {
-        _moveDir = value.Get<Vector2>(); 
-        _moveVel = _moveDir.normalized * moveSpeed; 
-        Debug.Log(_moveVel);
+        float turnRateValue = turnRate * _turnInput; //if no input then turnRate = 0
+        Debug.Log(turnRate + " ; " + _turnInput);
+        _rb.MoveRotation(_rb.rotation + turnRateValue);
+
     }
     
+    #region Input Handling
+    private void OnAccelerate(InputValue value)
+    {
+        _moveInput = value.Get<float>(); 
+    }
+
+    private void OnTurn(InputValue value)
+    {
+        _turnInput = value.Get<float>(); 
+    }
+    #endregion
 }
