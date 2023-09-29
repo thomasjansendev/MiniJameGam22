@@ -41,6 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Floor
+    uniqueID: 3511360443
+    locked: 0
+  - name: Aisle
+    uniqueID: 524833237
+    locked: 0
   - name: Player
     uniqueID: 2148754413
     locked: 0
