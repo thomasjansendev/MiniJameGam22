@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D _rb;
-    
+
 
     [SerializeField] private float moveForce;
     private Vector2 _moveForwardVector;
@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Accelerate()
-    {        
+    {
         _moveForwardVector = transform.up * moveForce;
-        _rb.AddForce(_moveInput*_moveForwardVector);
+        _rb.AddForce(_moveInput * _moveForwardVector);
     }
 
     private void Turn()
@@ -41,18 +41,30 @@ public class PlayerController : MonoBehaviour
         float turnRateValue = turnRate * _turnInput; //if no input then turnRate = 0
         Debug.Log(turnRate + " ; " + _turnInput);
         _rb.MoveRotation(_rb.rotation + turnRateValue);
-
     }
-    
+
     #region Input Handling
+
     private void OnAccelerate(InputValue value)
     {
-        _moveInput = value.Get<float>(); 
+        _moveInput = value.Get<float>();
     }
 
     private void OnTurn(InputValue value)
     {
-        _turnInput = value.Get<float>(); 
+        _turnInput = value.Get<float>();
     }
+
+    void OnQuit()
+    {
+        // def allows this to work in the editor or in regular game
+#if UNITY_STANDALONE
+        Application.Quit();
+#endif
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
     #endregion
 }
