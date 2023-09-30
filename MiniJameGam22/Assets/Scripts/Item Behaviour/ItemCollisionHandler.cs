@@ -1,19 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemCollisionHandler : MonoBehaviour
+namespace Item_Behaviour
 {
-    
-    [SerializeField] private float destroyDelay;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class ItemCollisionHandler : MonoBehaviour
     {
-        if (!other.gameObject.CompareTag("Player"))
-            return;
-        other.gameObject.GetComponent<CartContentManager>().AddItemToCart();
-        Delay.DestroyObj(transform.root.gameObject, destroyDelay);
-    }
     
+        private bool addedToBasket; 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.gameObject.CompareTag("Player"))
+                return;
+            if (!addedToBasket)
+            {
+                other.gameObject.GetComponent<CartContentManager>().AddItemToCart();
+                addedToBasket = true;
+                GetComponent<CapsuleCollider2D>().isTrigger = false;
+                gameObject.tag = "InCart";
+            }
+        }
+    
+    }
 }

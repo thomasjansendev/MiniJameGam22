@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float goBackSpeed;
     private float _turnInput;
     private Vector3 playerStartPos;
-    private bool movingToStartPos;
+    public bool movingToStartPos;
 
 
     // Start is called before the first frame update

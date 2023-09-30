@@ -6,7 +6,7 @@ public class CartContentManager : MonoBehaviour
     private float _initMass;
     private Rigidbody2D _rb;
 
-    public int ItemCountInCart { get; private set; }
+    public int ItemCountInCart { get; set; }
 
     // Start is called before the first frame update
     void Start()

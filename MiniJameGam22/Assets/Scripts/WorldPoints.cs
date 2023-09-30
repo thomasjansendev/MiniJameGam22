@@ -1,37 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Utilities;
 
 public class WorldPoints : MonoBehaviour
 {
-    private System.Random rnd;
     [SerializeField] private Vector2 bottomLeftCorner;
     [SerializeField] private Vector2 topRightCorner;
-    [SerializeField] private int rndGranularity;
     private NavMeshAgent agent;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        rnd = new System.Random();
     }
 
     private float RandomX()
     {
-        return (float)rnd.Next((int)(bottomLeftCorner.x * rndGranularity), (int)(topRightCorner.x * rndGranularity)) /
-               rndGranularity;
+        return Rand.Between(bottomLeftCorner.x, topRightCorner.x);
     }
 
     private float RandomY()
     {
-        return (float)rnd.Next((int)(bottomLeftCorner.y * rndGranularity), (int)(topRightCorner.y * rndGranularity)) /
-               rndGranularity;
+        return Rand.Between(bottomLeftCorner.y, topRightCorner.y);
     }
 
     public List<Vector2> GenerateRandomPath()
     {
         List<Vector2> path = new();
-        bool horizontal = rnd.Next(2) == 0;
+        bool horizontal = Rand.CoinFlip();
         Vector2 waypoint1, waypoint2;
 
         if (horizontal)
@@ -46,6 +42,7 @@ public class WorldPoints : MonoBehaviour
             waypoint1 = new Vector2(x, RandomY());
             waypoint2 = new Vector2(x, RandomY());
         }
+
         path.Add(waypoint1);
         path.Add(waypoint2);
         return path;
