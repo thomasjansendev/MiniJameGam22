@@ -1,13 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class CartContentManager : MonoBehaviour
 {
-    [SerializeField] private ItemPickUp itemClass;
-    
     private int _itemQuantity;
     private float _playerWeight;
     private Rigidbody2D _rb;
@@ -19,27 +13,22 @@ public class CartContentManager : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        itemClass.OnItemAddedToCart += OnItemAddedToCartHandler;
+        print("up and running");
     }
 
-    private void Update()
-    {
-
-    }
-
-    private void OnItemAddedToCartHandler()
+    public void AddItemToCart()
     {
         _itemQuantity++;
+        print(_itemQuantity);
         _rb.mass += massModifier;
         Debug.Log("additemtocart");
     }
-    
+
     private void OnCollisionEnter(Collision other)
     {
         if (!other.gameObject.CompareTag("Item"))
             return;
-        
+
         Debug.Log("itemcollisiondetected");
-        
     }
 }

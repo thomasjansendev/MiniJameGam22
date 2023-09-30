@@ -115,7 +115,6 @@ public class EnemyPathfinding : MonoBehaviour
 
     private void TryLoseSightOfPlayer()
     {
-        print("trying to lose sight");
         if ((transform.position - transformTarget.position).magnitude > enemyLostSightMag)
         {
             target = PathfindingTarget.Waypointing;
