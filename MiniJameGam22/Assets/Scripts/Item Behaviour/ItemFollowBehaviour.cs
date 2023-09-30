@@ -7,7 +7,7 @@ public class ItemFollowBehaviour : MonoBehaviour
     [SerializeField] private float scatterForce;
     private Rigidbody2D _itemRigidbody;
     private Transform _playerTransform;
-    private bool _playerDetected;
+    public bool _playerDetected;
     private CapsuleCollider2D _collider;
     private GameController _gameController;
 

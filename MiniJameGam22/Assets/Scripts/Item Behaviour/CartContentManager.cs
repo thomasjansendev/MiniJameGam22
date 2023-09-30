@@ -14,7 +14,6 @@ public class CartContentManager : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _initMass = _rb.mass;
         ItemCountInCart = 0;
-        print("cart is up and running");
     }
 
     public void AddItemToCart()

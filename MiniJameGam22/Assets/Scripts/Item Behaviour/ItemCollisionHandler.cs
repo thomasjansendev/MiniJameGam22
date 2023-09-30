@@ -4,20 +4,19 @@ namespace Item_Behaviour
 {
     public class ItemCollisionHandler : MonoBehaviour
     {
-    
-        private bool addedToBasket; 
+        public bool alreadyAddedToBasket;
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (!other.gameObject.CompareTag("Player"))
                 return;
-            if (!addedToBasket)
+            if (!alreadyAddedToBasket)
             {
                 other.gameObject.GetComponent<CartContentManager>().AddItemToCart();
-                addedToBasket = true;
+                alreadyAddedToBasket = true;
                 GetComponent<CapsuleCollider2D>().isTrigger = false;
                 gameObject.tag = "InCart";
             }
         }
-    
     }
 }

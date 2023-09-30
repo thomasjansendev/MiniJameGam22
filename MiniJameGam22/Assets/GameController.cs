@@ -54,10 +54,8 @@ public class GameController : MonoBehaviour
 
     private void SpawnItem()
     {
-        print("try spawn");
         if (GameObject.FindGameObjectsWithTag("Item").Length > maxNumberOfItems)
         {
-            print("too many");
             return;
         }
 
@@ -66,7 +64,6 @@ public class GameController : MonoBehaviour
             Vector2 tryItemPos = points.GenerateRandomPath()[0]; // just want one point, not a path
             if (points.CollisionAtPoint(tryItemPos))
             {
-                print("spawn success");
                 Instantiate(itemPrefab, tryItemPos, Quaternion.identity);
                 return;
             }
@@ -77,8 +74,6 @@ public class GameController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print("test");
-        print(gameState);
         if (gameState == GameState.NotStarted)
         {
             if (Keyboard.current.anyKey.wasPressedThisFrame)

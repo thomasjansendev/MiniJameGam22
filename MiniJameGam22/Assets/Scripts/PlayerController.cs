@@ -39,9 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        print("moving back");
-
+        
         var step = goBackSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, playerStartPos, step);
         transform.rotation = Quaternion.Slerp(transform.rotation,
