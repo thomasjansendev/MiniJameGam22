@@ -22,7 +22,8 @@ public class ChestContentManager : MonoBehaviour
         print("item quantity in chest: " + ItemQuantityInChest);
         foreach (var obj in GameObject.FindGameObjectsWithTag("InCart"))
         {
-            Destroy(obj);
+            print(obj.name);
+            Destroy(obj.transform.parent.gameObject);
         }
     }
 }
