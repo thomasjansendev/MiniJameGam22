@@ -30,7 +30,6 @@ public class ItemFollowBehaviour : MonoBehaviour
 
         _playerTransform = other.transform;
         _playerDetected = true;
-        Debug.Log(_playerDetected);
     }
     
     private void MoveTowardsPlayer()

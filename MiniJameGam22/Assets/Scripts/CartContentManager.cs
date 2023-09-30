@@ -2,33 +2,24 @@ using UnityEngine;
 
 public class CartContentManager : MonoBehaviour
 {
-    private int _itemQuantity;
-    private float _playerWeight;
-    private Rigidbody2D _rb;
-
-    private Collider2D _playerCollider;
     [SerializeField] private float massModifier;
+    private int _itemQuantity;
+    private Rigidbody2D _rb;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        print("up and running");
+        print("cart is up and running");
     }
 
     public void AddItemToCart()
     {
         _itemQuantity++;
-        print(_itemQuantity);
         _rb.mass += massModifier;
-        Debug.Log("additemtocart");
+        print("# items in cart: " + _itemQuantity);
+        print("mass of cart: " + _rb.mass);
     }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        if (!other.gameObject.CompareTag("Item"))
-            return;
-
-        Debug.Log("itemcollisiondetected");
-    }
+    
 }
