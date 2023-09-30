@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Obstruction
   - Item
+  - Chest
+  - Timer
   layers:
   - Default
   - TransparentFX
