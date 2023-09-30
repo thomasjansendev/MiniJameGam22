@@ -6,8 +6,9 @@ using UnityEngine;
 public class ChestContentManager : MonoBehaviour
 {
 
-    private int _itemQuantityInChest;
     private int _itemQuantityInCart;
+    
+    public int ItemQuantityInChest { get; private set; }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -16,8 +17,8 @@ public class ChestContentManager : MonoBehaviour
 
         var cartContentManager = other.gameObject.GetComponent<CartContentManager>();
         _itemQuantityInCart = cartContentManager.ItemCountInCart;
-        _itemQuantityInChest += _itemQuantityInCart;
+        ItemQuantityInChest += _itemQuantityInCart;
         cartContentManager.EmptyCart();
-        print("item quantity in chest: " + _itemQuantityInChest);
+        print("item quantity in chest: " + ItemQuantityInChest);
     }
 }

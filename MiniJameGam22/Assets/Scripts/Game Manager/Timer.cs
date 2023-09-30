@@ -10,10 +10,12 @@ public class Timer : MonoBehaviour
     //[SerializeField] private float cutoffTimeInMinutes = 0.1f;
     [SerializeField] private float cutoffTimeInSeconds = 10f;
     private float _startTime;
-    private float _currentTime;
+    private float _elapsedTime;
     private bool _isTimerOn = false;
     private bool _isGameOver = false;
 
+    public float TimeRemaining { get; private set; }
+    
     private void Start()
     {
         //_cutoffTimeInSeconds = 60 * cutoffTimeInMinutes; 
@@ -41,17 +43,19 @@ public class Timer : MonoBehaviour
     {
         if(!_isTimerOn)
             return;
+        
+        _elapsedTime = Time.time - _startTime;
+        TimeRemaining = cutoffTimeInSeconds - _elapsedTime;
+        print(TimeRemaining);
 
-        if (_currentTime - _startTime > cutoffTimeInSeconds)
+        if (TimeRemaining <= 0)
         {
+            TimeRemaining = 0; 
             _isGameOver = true;
             print("game is over !");
             return;
         }
         
-        _currentTime = Time.time;
-        float deltaTime = _currentTime - _startTime;
-        print("time diff: " + deltaTime);
          
     }
     
