@@ -9,6 +9,7 @@ TagManager:
   - Chest
   - Timer
   - Enemy
+  - PlayerStartPos
   layers:
   - Default
   - TransparentFX

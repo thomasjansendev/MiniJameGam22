@@ -46,7 +46,6 @@ public class Timer : MonoBehaviour
         
         _elapsedTime = Time.time - _startTime;
         TimeRemaining = cutoffTimeInSeconds - _elapsedTime;
-        print(TimeRemaining);
 
         if (TimeRemaining <= 0)
         {

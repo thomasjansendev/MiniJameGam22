@@ -206,6 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 18
   turnRate: 5
+  goBackSpeed: 6
 --- !u!114 &8208456475503597257
 MonoBehaviour:
   m_ObjectHideFlags: 0

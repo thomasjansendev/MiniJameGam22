@@ -7,11 +7,11 @@ public class GameController : MonoBehaviour
 
     private WorldPoints points;
 
-    // Start is called before the first frame update
     void Start()
     {
         points = GetComponent<WorldPoints>();
         SpawnStartItems();
+        InvokeRepeating(nameof(SpawnItem), 0, 0.5f);
     }
 
     void SpawnStartItems()
@@ -35,10 +35,5 @@ public class GameController : MonoBehaviour
         }
 
         throw new("Not able to generate items");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
