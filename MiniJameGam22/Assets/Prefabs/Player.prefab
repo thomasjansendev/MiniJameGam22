@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6193974655577301271}
   - component: {fileID: 5763177879003662}
   - component: {fileID: 249190081401700200}
-  - component: {fileID: 6993747612321871482}
+  - component: {fileID: 8208456475503597257}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4610794425505317667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6141108, y: -0.33647004, z: 0}
+  m_LocalPosition: {x: -1.44, y: -0.33647004, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveForce: 23
   turnRate: 5
---- !u!114 &6993747612321871482
+--- !u!114 &8208456475503597257
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5135d9141b27ab84caf935d41e8d0a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemClass: {fileID: 7973444654703078861, guid: aade44a903bb2874b94bf01048c079e9, type: 3}
+  massModifier: 1
 --- !u!1 &8479558214737501054
 GameObject:
   m_ObjectHideFlags: 0
