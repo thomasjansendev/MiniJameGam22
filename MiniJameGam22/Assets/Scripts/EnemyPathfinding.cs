@@ -23,6 +23,7 @@ public class EnemyPathfinding : MonoBehaviour
     [SerializeField] private Vector2 topRightCorner;
     [SerializeField] private GameObject emptyGameObject;
     [SerializeField] private int rndScaleFactor;
+    [SerializeField] private int minimumPathLength;
     private int curWaypoint;
     [SerializeField] private float waypointSwitchMag;
     [SerializeField] private float enemyLostSightMag;
@@ -40,7 +41,7 @@ public class EnemyPathfinding : MonoBehaviour
 
     private float RandomX()
     {
-        return rnd.Next((int)(bottomLeftCorner.x * rndScaleFactor), (int)(topRightCorner.x * rndScaleFactor)) /
+        return (float)rnd.Next((int)(bottomLeftCorner.x * rndScaleFactor), (int)(topRightCorner.x * rndScaleFactor)) /
                rndScaleFactor;
     }
 
@@ -50,10 +51,12 @@ public class EnemyPathfinding : MonoBehaviour
                rndScaleFactor;
     }
 
-    private void GenerateWaypoints()
+    private List<Vector2> GenerateRandomPath()
     {
-        bool horizontal = rnd.Next(1) == 0;
+        List<Vector2> path = new();
+        bool horizontal = rnd.Next(2) == 0;
         Vector2 waypoint1, waypoint2;
+
         if (horizontal)
         {
             float y = RandomY();
@@ -67,8 +70,43 @@ public class EnemyPathfinding : MonoBehaviour
             waypoint2 = new Vector2(x, RandomY());
         }
 
-        waypoints.Add(Instantiate(emptyGameObject, waypoint1, Quaternion.identity));
-        waypoints.Add(Instantiate(emptyGameObject, waypoint2, Quaternion.identity));
+        path.Add(waypoint1);
+        path.Add(waypoint2);
+        return path;
+    }
+
+    private bool CollisionAtPoint(Vector2 pos)
+    {
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(pos, path);
+        return path.status != NavMeshPathStatus.PathComplete;
+    }
+
+    private void GenerateWaypoints()
+    {
+        // trial and error to make sure no collision on waypoint spawn and path length long enough
+        while (true)
+        {
+            List<Vector2> path = GenerateRandomPath();
+            print(path[0]);
+            print(path[1]);
+
+            if ((path[0] - path[1]).magnitude < minimumPathLength)
+            {
+                print("failed cause too small");
+                continue;
+            }
+
+            if (CollisionAtPoint(path[0]) || CollisionAtPoint(path[1]))
+            {
+                print("failed cause collision");
+                continue;
+            }
+
+            waypoints.Add(Instantiate(emptyGameObject, path[1], Quaternion.identity));
+            waypoints.Add(Instantiate(emptyGameObject, path[0], Quaternion.identity));
+            return;
+        }
     }
 
     private void FaceTarget()
