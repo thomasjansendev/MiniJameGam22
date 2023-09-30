@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Obstruction
+  - Item
   layers:
   - Default
   - TransparentFX
