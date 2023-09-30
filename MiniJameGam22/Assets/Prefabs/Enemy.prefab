@@ -95,6 +95,8 @@ GameObject:
   - component: {fileID: 8204931653220528246}
   - component: {fileID: -5051648538744269678}
   - component: {fileID: 6539846309785454255}
+  - component: {fileID: 309340655325716114}
+  - component: {fileID: 3231125598046339096}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -187,6 +189,7 @@ MonoBehaviour:
   topRightCorner: {x: 14, y: 11}
   emptyGameObject: {fileID: 353775439762867623, guid: 1a693a550dcd0e74fa1c5f88e90fc813, type: 3}
   rndScaleFactor: 100
+  minimumPathLength: 15
   waypointSwitchMag: 1
   enemyLostSightMag: 6
   target: 1
@@ -265,3 +268,27 @@ PolygonCollider2D:
       - {x: 3.351686, y: 1.0754608}
       - {x: 2.8012714, y: 2.1478107}
   m_UseDelaunayMesh: 0
+--- !u!114 &309340655325716114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293444457439551328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd7e54cd89da6b4b990edf9178f2157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3231125598046339096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293444457439551328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffd7e54cd89da6b4b990edf9178f2157, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
