@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 6006168747248558226}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   minimumPathLength: 15
   waypointSwitchMag: 1
   enemyLostSightMag: 6
-  target: 1
+  target: 2
 --- !u!195 &-5051648538744269678
 NavMeshAgent:
   m_ObjectHideFlags: 0

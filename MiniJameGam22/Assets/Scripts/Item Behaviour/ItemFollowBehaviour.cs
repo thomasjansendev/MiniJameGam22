@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using Utilities;
 
@@ -11,14 +8,15 @@ public class ItemFollowBehaviour : MonoBehaviour
     private Rigidbody2D _itemRigidbody;
     private Transform _playerTransform;
     private bool _playerDetected;
-    private CapsuleCollider2D collider;
-
+    private CapsuleCollider2D _collider;
+    private GameController _gameController;
 
     private void Start()
     {
+        _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         _itemRigidbody = GetComponent<Rigidbody2D>();
         _playerDetected = false;
-        collider = GetComponentInChildren<CapsuleCollider2D>();
+        _collider = GetComponentInChildren<CapsuleCollider2D>();
     }
 
     private void FixedUpdate()
@@ -31,9 +29,9 @@ public class ItemFollowBehaviour : MonoBehaviour
     {
         if (_playerDetected && (transform.position - _playerTransform.position).magnitude > 2f)
         {
-            if (collider != null)
+            if (_collider != null)
             {
-                collider.isTrigger = true;
+                _collider.isTrigger = true;
             }
             Delay.Method(() => ResetCollider(), 1f);
         }
@@ -41,9 +39,9 @@ public class ItemFollowBehaviour : MonoBehaviour
 
     private void ResetCollider()
     {
-        if (collider != null)
+        if (_collider != null)
         {
-            collider.isTrigger = false;
+            _collider.isTrigger = false;
         }
     }
 
@@ -53,7 +51,6 @@ public class ItemFollowBehaviour : MonoBehaviour
             return;
         if (other.gameObject.GetComponent<PlayerController>().movingToStartPos)
         {
-            print("moving so don't follow!");
             return;
         }
 
@@ -63,7 +60,7 @@ public class ItemFollowBehaviour : MonoBehaviour
 
     private void MoveTowardsPlayer()
     {
-        if (!_playerDetected)
+        if (!_playerDetected || _gameController.gameState != GameState.Play)
             return;
 
         Vector2 moveDir = _playerTransform.position - transform.position;
@@ -75,5 +72,6 @@ public class ItemFollowBehaviour : MonoBehaviour
         _playerDetected = false;
         var dir = (Vector2)(Quaternion.Euler(0, 0, Rand.Between(0, 360)) * Vector2.up);
         _itemRigidbody.AddForce(dir * scatterForce);
+        transform.GetChild(0).tag = "Untagged";
     }
 }

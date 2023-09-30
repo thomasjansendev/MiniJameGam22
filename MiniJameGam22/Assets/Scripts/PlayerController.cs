@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float goBackSpeed;
     private float _turnInput;
     private Vector3 playerStartPos;
-    public bool movingToStartPos;
+    [NonSerialized] public bool movingToStartPos;
 
 
     // Start is called before the first frame update
