@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,57 +17,49 @@ public class EnemyPathfinding : MonoBehaviour
     private NavMeshAgent agent;
     private GameObject player;
     private List<GameObject> waypoints = new();
-    private System.Random rnd;
-    [SerializeField] private Vector2 bottomLeftCorner;
-    [SerializeField] private Vector2 topRightCorner;
+
     [SerializeField] private GameObject emptyGameObject;
-    [SerializeField] private int rndScaleFactor;
+    [SerializeField] private int minimumPathLength;
     private int curWaypoint;
     [SerializeField] private float waypointSwitchMag;
     [SerializeField] private float enemyLostSightMag;
     public PathfindingTarget target = PathfindingTarget.Undefined;
     private bool delaySwitching;
+    private WorldPoints points;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        points = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldPoints>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateUpAxis = false;
-        rnd = new System.Random();
         GenerateWaypoints();
     }
 
-    private float RandomX()
-    {
-        return rnd.Next((int)(bottomLeftCorner.x * rndScaleFactor), (int)(topRightCorner.x * rndScaleFactor)) /
-               rndScaleFactor;
-    }
-
-    private float RandomY()
-    {
-        return rnd.Next((int)(bottomLeftCorner.y * rndScaleFactor), (int)(topRightCorner.y * rndScaleFactor)) /
-               rndScaleFactor;
-    }
 
     private void GenerateWaypoints()
     {
-        bool horizontal = rnd.Next(1) == 0;
-        Vector2 waypoint1, waypoint2;
-        if (horizontal)
+        // trial and error to make sure no collision on waypoint spawn and path length long enough
+        for (int i = 0; i < 100; i++)
         {
-            float y = RandomY();
-            waypoint1 = new Vector2(RandomX(), y);
-            waypoint2 = new Vector2(RandomX(), y);
-        }
-        else
-        {
-            float x = RandomX();
-            waypoint1 = new Vector2(x, RandomY());
-            waypoint2 = new Vector2(x, RandomY());
+            List<Vector2> path = points.GenerateRandomPath();
+
+            if ((path[0] - path[1]).magnitude < minimumPathLength)
+            {
+                continue;
+            }
+
+            if (points.CollisionAtPoint(path[0]) || points.CollisionAtPoint(path[1]))
+            {
+                continue;
+            }
+
+            waypoints.Add(Instantiate(emptyGameObject, path[1], Quaternion.identity));
+            waypoints.Add(Instantiate(emptyGameObject, path[0], Quaternion.identity));
+            return;
         }
 
-        waypoints.Add(Instantiate(emptyGameObject, waypoint1, Quaternion.identity));
-        waypoints.Add(Instantiate(emptyGameObject, waypoint2, Quaternion.identity));
+        throw new("Not able to generate items");
     }
 
     private void FaceTarget()
