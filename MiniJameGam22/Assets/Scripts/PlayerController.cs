@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour
     private void Turn()
     {
         float turnRateValue = turnRate * _turnInput; //if no input then turnRate = 0
-        Debug.Log(turnRate + " ; " + _turnInput);
         _rb.MoveRotation(_rb.rotation + turnRateValue);
     }
 
