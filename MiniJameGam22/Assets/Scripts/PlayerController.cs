@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
         if ((transform.position - playerStartPos).magnitude < 0.01f)
         {
             movingToStartPos = false;
-            GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<CapsuleCollider2D>().enabled = true;
         }
     }
 
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
     {
         print("starting move back");
         movingToStartPos = true;
-        GetComponent<BoxCollider2D>().enabled = false;
+        GetComponent<CapsuleCollider2D>().enabled = false;
     }
 
     #region Input Handling

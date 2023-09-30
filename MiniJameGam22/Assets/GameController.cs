@@ -6,7 +6,8 @@ using UnityEngine.InputSystem.Utilities;
 public enum GameState
 {
     Play,
-    NotStarted
+    NotStarted,
+    GameOver
 }
 
 public class GameController : MonoBehaviour
