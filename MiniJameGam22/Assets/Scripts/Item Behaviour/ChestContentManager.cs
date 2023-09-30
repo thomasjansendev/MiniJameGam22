@@ -20,5 +20,9 @@ public class ChestContentManager : MonoBehaviour
         ItemQuantityInChest += _itemQuantityInCart;
         cartContentManager.EmptyCart();
         print("item quantity in chest: " + ItemQuantityInChest);
+        foreach (var obj in GameObject.FindGameObjectsWithTag("InCart"))
+        {
+            Destroy(obj);
+        }
     }
 }
