@@ -3,22 +3,33 @@ using UnityEngine;
 public class CartContentManager : MonoBehaviour
 {
     [SerializeField] private float massModifier;
-    private int _itemQuantity;
+    private float _initMass;
     private Rigidbody2D _rb;
-    
+
+    public int ItemCountInCart { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _initMass = _rb.mass;
+        ItemCountInCart = 0;
         print("cart is up and running");
     }
 
     public void AddItemToCart()
     {
-        _itemQuantity++;
+        ItemCountInCart++;
         _rb.mass += massModifier;
-        print("# items in cart: " + _itemQuantity);
+        print("# items in cart: " + ItemCountInCart);
+        print("mass of cart: " + _rb.mass);
+    }
+    
+    public void EmptyCart()
+    {
+        ItemCountInCart = 0;
+        _rb.mass = _initMass;
+        print("# items in cart: " + ItemCountInCart);
         print("mass of cart: " + _rb.mass);
     }
     
