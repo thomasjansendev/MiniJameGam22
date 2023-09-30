@@ -14,7 +14,7 @@ public class ChestContentManager : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
-
+        print(other.gameObject.name);
         var cartContentManager = other.gameObject.GetComponent<CartContentManager>();
         _itemQuantityInCart = cartContentManager.ItemCountInCart;
         ItemQuantityInChest += _itemQuantityInCart;
@@ -22,7 +22,7 @@ public class ChestContentManager : MonoBehaviour
         print("item quantity in chest: " + ItemQuantityInChest);
         foreach (var obj in GameObject.FindGameObjectsWithTag("InCart"))
         {
-            Destroy(obj);
+            Destroy(obj.transform.parent.gameObject);
         }
     }
 }

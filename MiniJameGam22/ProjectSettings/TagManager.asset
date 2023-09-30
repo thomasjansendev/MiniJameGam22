@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - PlayerStartPos
   - InCart
+  - Title
   layers:
   - Default
   - TransparentFX

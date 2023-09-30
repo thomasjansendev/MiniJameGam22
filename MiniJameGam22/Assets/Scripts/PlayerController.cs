@@ -1,4 +1,4 @@
-using Unity.Mathematics;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float goBackSpeed;
     private float _turnInput;
     private Vector3 playerStartPos;
-    public bool movingToStartPos;
+    [NonSerialized] public bool movingToStartPos;
 
 
     // Start is called before the first frame update
@@ -39,9 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-
-        print("moving back");
-
+        
         var step = goBackSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, playerStartPos, step);
         transform.rotation = Quaternion.Slerp(transform.rotation,
