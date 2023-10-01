@@ -19,13 +19,18 @@ public class EnemyLogic : MonoBehaviour
             other.gameObject.GetComponentInChildren<CartContentManager>().EmptyCart();
             pathfinding.target = PathfindingTarget.Waypointing;
             pathfinding.playedAudio = false;
+            int i = 0;
             foreach (var obj in GameObject.FindGameObjectsWithTag("InCart"))
             {
-                obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();
+                if (i == 0)
+                {
+                    i++;
+                    obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();
+                }
+
                 obj.GetComponent<ItemCollisionHandler>().alreadyAddedToBasket = false;
-            } 
+            }
             // TODO maybe freeze enemies while you go back to start pos to look cool?
         }
-
     }
 }
