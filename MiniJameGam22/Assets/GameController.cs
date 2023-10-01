@@ -29,7 +29,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject scoreGUI;
     [SerializeField] private GameObject endGameGUI;
-
+    [SerializeField] private GameObject startScreenGUI;
+    
     private Scene scene;
     
     void Start()
@@ -39,9 +40,8 @@ public class GameController : MonoBehaviour
         SpawnStartItems();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        title = GameObject.FindGameObjectWithTag("Title").GetComponent<Title>();
-        title.ShowTitle();
         scene = SceneManager.GetActiveScene();
+        startScreenGUI.SetActive(true);
         scoreGUI.SetActive(false);
         endGameGUI.SetActive(false);
     }
@@ -71,14 +71,15 @@ public class GameController : MonoBehaviour
 
     private void RestartGame()
     {
+        //print("restart game");
         SceneManager.LoadScene(scene.name);
     }
 
     private void GameStart()
     {
-        title.HideTitle();
         InvokeRepeating(nameof(SpawnItem), 0, spawnRate);
         playerController.enabled = true;
+        startScreenGUI.SetActive(false);
         scoreGUI.SetActive(true);
         timer.SetStartTime();
 
