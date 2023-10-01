@@ -15,7 +15,6 @@ public class RandomSpriteAllocation : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rngMaxRange = _sprites.Length;
-        print(_rngMaxRange);
         ChoseRndSprite();
     }
 

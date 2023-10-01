@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     [NonSerialized] public GameState gameState;
     private GameObject player;
     private Title title;
+    private bool _gameStartPressed;
+    private PlayerController playerController;
 
     void Start()
     {
@@ -28,13 +30,26 @@ public class GameController : MonoBehaviour
         points = GetComponent<WorldPoints>();
         SpawnStartItems();
         player = GameObject.FindGameObjectWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         title = GameObject.FindGameObjectWithTag("Title").GetComponent<Title>();
         title.ShowTitle();
     }
-
-    void GameStart()
+    
+    private void Update()
     {
-        print("Game Start");
+        if(gameState != GameState.NotStarted)
+            return;
+        
+        if (playerController.GameStartPressed)
+        {
+            GameStart();
+            gameState = GameState.Play;
+        }
+
+    }
+
+    private void GameStart()
+    {
         title.HideTitle();
         InvokeRepeating(nameof(SpawnItem), 0, spawnRate);
         player.GetComponent<PlayerController>().enabled = true;
@@ -43,9 +58,10 @@ public class GameController : MonoBehaviour
         {
             obj.GetComponent<EnemyPathfinding>().target = PathfindingTarget.Waypointing;
         }
+        print("Game Started");
     }
 
-    void SpawnStartItems()
+    private void SpawnStartItems()
     {
         for (int i = 0; i < numberOfStartItems; i++)
         {
@@ -73,15 +89,7 @@ public class GameController : MonoBehaviour
         throw new("Not able to generate items");
     }
 
-    private void FixedUpdate()
-    {
-        if (gameState == GameState.NotStarted)
-        {
-            if (Keyboard.current.anyKey.wasPressedThisFrame)
-            {
-                GameStart();
-                gameState = GameState.Play;
-            }
-        }
-    }
+    
+    
+    
 }

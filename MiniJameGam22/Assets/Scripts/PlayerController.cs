@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private float _turnInput;
     private Vector3 playerStartPos;
     [NonSerialized] public bool movingToStartPos;
+    
+    public bool GameStartPressed { get; private set; }
 
 
     // Start is called before the first frame update
@@ -23,22 +25,41 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         playerStartPos = GameObject.FindGameObjectWithTag("PlayerStartPos").transform.position;
         transform.position = playerStartPos;
+        GameStartPressed = false;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //print("this is from the playercontroller");
         Accelerate();
         Turn();
         OptionalMoveBackToStart();
+    }
+    
+
+    private void Accelerate()
+    {
+        if (movingToStartPos)
+            return;
+
+        _moveForwardVector = transform.up * moveForce;
+        _rb.AddForce(_moveInput * _moveForwardVector);
+    }
+
+    private void Turn()
+    {
+        if (movingToStartPos)
+            return;
+
+        float turnRateValue = turnRate * _turnInput; //if no input then turnRateValue = 0
+        _rb.MoveRotation(_rb.rotation + turnRateValue);
     }
 
     private void OptionalMoveBackToStart()
     {
         if (!movingToStartPos)
-        {
             return;
-        }
         
         var step = goBackSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, playerStartPos, step);
@@ -50,30 +71,6 @@ public class PlayerController : MonoBehaviour
             GetComponent<CapsuleCollider2D>().enabled = true;
         }
     }
-
-
-    private void Accelerate()
-    {
-        if (movingToStartPos)
-        {
-            return;
-        }
-
-        _moveForwardVector = transform.up * moveForce;
-        _rb.AddForce(_moveInput * _moveForwardVector);
-    }
-
-    private void Turn()
-    {
-        if (movingToStartPos)
-        {
-            return;
-        }
-
-        float turnRateValue = turnRate * _turnInput; //if no input then turnRateValue = 0
-        _rb.MoveRotation(_rb.rotation + turnRateValue);
-    }
-
     public void MovePlayerBackToStart()
     {
         print("starting move back");
@@ -85,13 +82,30 @@ public class PlayerController : MonoBehaviour
 
     private void OnAccelerate(InputValue value)
     {
+        if(!GameStartPressed) // to prevent player from moving before exiting start screen
+            return;
+        
+        print("accelerate input received");
         _moveInput = value.Get<float>();
     }
 
     private void OnTurn(InputValue value)
     {
+        if(!GameStartPressed) // to prevent player from moving before exiting start screen
+            return;
+        
+        print("turn input received");
         _turnInput = value.Get<float>();
     }
+    
+    private void OnStartGame(InputValue value)
+    {
+        if(GameStartPressed)
+            return;
+        
+        GameStartPressed = true;
+    }
+    
 
     void OnQuit()
     {

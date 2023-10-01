@@ -35,7 +35,7 @@
                 {
                     "name": "StartGame",
                     "type": "Button",
-                    "id": "94f6d610-cec7-4d8a-a8c2-29bfcb9e53bb",
+                    "id": "9253e2bd-f12f-4f48-8557-0960cf02705a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -122,11 +122,11 @@
                 },
                 {
                     "name": "",
-                    "id": "f15f3082-1335-4a3d-a7b5-c9118f4eca66",
+                    "id": "c572c016-87ec-44f4-83fb-03eb8f028828",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard&Mouse",
                     "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -223,6 +223,15 @@
                     "type": "PassThrough",
                     "id": "c5d44261-24e8-4611-9f07-fdabc4992258",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StartGame",
+                    "type": "Button",
+                    "id": "85eee377-37bd-436a-a849-ed34ac6be060",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -644,6 +653,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7f7cf6a-9d60-4006-aa1b-b17ef5482bd0",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartGame",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
