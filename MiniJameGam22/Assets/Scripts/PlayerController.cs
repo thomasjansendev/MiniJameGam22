@@ -15,7 +15,8 @@ public class PlayerController : MonoBehaviour
     private float _turnInput;
     private Vector3 playerStartPos;
     [NonSerialized] public bool movingToStartPos;
-    
+    private AudioSource audioSource;
+
     public bool GameStartPressed { get; set; }
 
 
@@ -26,17 +27,31 @@ public class PlayerController : MonoBehaviour
         playerStartPos = GameObject.FindGameObjectWithTag("PlayerStartPos").transform.position;
         transform.position = playerStartPos;
         GameStartPressed = false;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = 0;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //print("this is from the playercontroller");
         Accelerate();
         Turn();
         OptionalMoveBackToStart();
+        PlayTrolleyAudio();
     }
-    
+
+    private void PlayTrolleyAudio()
+    {
+        if (_rb.velocity.magnitude > 2f)
+        {
+            audioSource.volume = 0.3f;
+        }
+        else
+        {
+            audioSource.volume /= 1 + (10 / _rb.velocity.magnitude) ;  // scales down volume quicker if velocity low
+        }
+    }
+
 
     private void Accelerate()
     {
@@ -60,7 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!movingToStartPos)
             return;
-        
+
         var step = goBackSpeed * Time.deltaTime; // calculate distance to move
         transform.position = Vector3.MoveTowards(transform.position, playerStartPos, step);
         transform.rotation = Quaternion.Slerp(transform.rotation,
@@ -71,6 +86,7 @@ public class PlayerController : MonoBehaviour
             GetComponent<CapsuleCollider2D>().enabled = true;
         }
     }
+
     public void MovePlayerBackToStart()
     {
         print("starting move back");
@@ -82,28 +98,28 @@ public class PlayerController : MonoBehaviour
 
     private void OnAccelerate(InputValue value)
     {
-        if(!GameStartPressed) // to prevent player from moving before exiting start screen
+        if (!GameStartPressed) // to prevent player from moving before exiting start screen
             return;
-        
+
         _moveInput = value.Get<float>();
     }
 
     private void OnTurn(InputValue value)
     {
-        if(!GameStartPressed) // to prevent player from moving before exiting start screen
+        if (!GameStartPressed) // to prevent player from moving before exiting start screen
             return;
-        
+
         _turnInput = value.Get<float>();
     }
-    
+
     private void OnStartGame(InputValue value)
     {
-        if(GameStartPressed)
+        if (GameStartPressed)
             return;
-        
+
         GameStartPressed = true;
     }
-    
+
 
     void OnQuit()
     {

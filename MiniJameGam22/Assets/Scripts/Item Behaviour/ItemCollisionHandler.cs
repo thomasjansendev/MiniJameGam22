@@ -16,6 +16,7 @@ namespace Item_Behaviour
                 alreadyAddedToBasket = true;
                 GetComponent<CapsuleCollider2D>().isTrigger = false;
                 gameObject.tag = "InCart";
+                GetComponentInParent<ItemSounds>().PlayPickup();
             }
         }
     }
