@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -18,15 +17,14 @@ public class EnemyPathfinding : MonoBehaviour
     private AudioSource audioSource;
     private NavMeshAgent agent;
     private GameObject player;
-    private List<GameObject> waypoints = new();
-
+    public List<GameObject> waypoints;
+    
     [SerializeField] private GameObject emptyGameObject;
     [SerializeField] private int minimumPathLength;
     private int curWaypoint;
     [SerializeField] private float waypointSwitchMag;
     [SerializeField] private float enemyLostSightMag;
-    public PathfindingTarget target = PathfindingTarget.Undefined;
-    private bool delaySwitching;
+    public PathfindingTarget target = PathfindingTarget.Waypointing;
     private WorldPoints points;
     public bool playedAudio;
 
@@ -37,7 +35,7 @@ public class EnemyPathfinding : MonoBehaviour
         points = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldPoints>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateUpAxis = false;
-        GenerateWaypoints();
+        // GenerateWaypoints();
     }
 
 
@@ -97,15 +95,14 @@ public class EnemyPathfinding : MonoBehaviour
 
     private void TrySwitchWaypoint()
     {
-        if ((transform.position - transformTarget.position).magnitude > waypointSwitchMag || delaySwitching)
+        if ((transform.position - transformTarget.position).magnitude > waypointSwitchMag)
         {
             return;
         }
 
+        print("switch");
         curWaypoint += 1;
-        curWaypoint %= 2; // cycle between 0 - 1 - 0 - 1 - ...
-        delaySwitching = true;
-        Delay.Method(() => delaySwitching = false, 1f); // give cooldown between switching waypoints
+        curWaypoint %= waypoints.Count; // cycle between 0 - 1 - 0 - 1 - ...
     }
 
     private void TryLoseSightOfPlayer()
@@ -118,7 +115,7 @@ public class EnemyPathfinding : MonoBehaviour
         }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         agent.SetDestination(ChooseTarget().position);
         FaceTarget();

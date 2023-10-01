@@ -95,6 +95,7 @@ public class GameController : MonoBehaviour
         endGameGUI.SetActive(true);
         scoreGUI.SetActive(false);
         playerController.GameStartPressed = false; //reset the button to start the game
+        playerController.FreezePlayer();
     }
 
     private void SpawnStartItems()

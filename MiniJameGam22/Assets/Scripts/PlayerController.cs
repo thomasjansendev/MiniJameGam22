@@ -40,6 +40,12 @@ public class PlayerController : MonoBehaviour
         PlayTrolleyAudio();
     }
 
+    public void FreezePlayer()
+    {
+        _rb.velocity = new Vector3(0  ,0, 0);
+        _rb.angularVelocity = 0;
+    }
+
     private void PlayTrolleyAudio()
     {
         if (_rb.velocity.magnitude > 2f)
