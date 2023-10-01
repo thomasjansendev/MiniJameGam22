@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
     {
         if (_rb.velocity.magnitude > 2f)
         {
-            audioSource.volume = 0.3f;
+            audioSource.volume = 0.1f;
         }
         else
         {
