@@ -18,7 +18,12 @@ public class TimerUIHandler : MonoBehaviour
     
     public void Update()
     {
-        _guiText.text = "Time left: " + _timer.TimeRemaining.ToString("#");
+        _guiText.text = _timer.TimeRemaining.ToString("#");
+
+        if (_timer.TimeRemaining <= 30f)
+            _guiText.color = Color.red;
+
+
     }
         
 }

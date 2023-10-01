@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour
         if(!GameStartPressed) // to prevent player from moving before exiting start screen
             return;
         
-        print("accelerate input received");
         _moveInput = value.Get<float>();
     }
 
@@ -94,7 +93,6 @@ public class PlayerController : MonoBehaviour
         if(!GameStartPressed) // to prevent player from moving before exiting start screen
             return;
         
-        print("turn input received");
         _turnInput = value.Get<float>();
     }
     

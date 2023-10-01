@@ -12,25 +12,24 @@ public class Timer : MonoBehaviour
     private float _startTime;
     private float _elapsedTime;
     private bool _isTimerOn = false;
-    private bool _isGameOver = false;
 
+    public bool IsGameOver { get; private set; }
     public float TimeRemaining { get; private set; }
     
     private void Start()
     {
-        //_cutoffTimeInSeconds = 60 * cutoffTimeInMinutes; 
-        SetStartTime(); // -> need to call this function when player starts game
+        IsGameOver = false;
     }
 
     private void Update()
     {
-        if(_isGameOver)
+        if(IsGameOver)
             return;
         
         CountDownToCutOff();
     }
 
-    private void SetStartTime()
+    public void SetStartTime()
     {
         if (_isTimerOn)
             return;
@@ -50,9 +49,7 @@ public class Timer : MonoBehaviour
         if (TimeRemaining <= 0)
         {
             TimeRemaining = 0; 
-            _isGameOver = true;
-            print("game is over !");
-            return;
+            IsGameOver = true;
         }
         
          

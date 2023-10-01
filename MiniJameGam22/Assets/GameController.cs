@@ -23,6 +23,7 @@ public class GameController : MonoBehaviour
     private Title title;
     private bool _gameStartPressed;
     private PlayerController playerController;
+    [SerializeField] private Timer timer;
 
     void Start()
     {
@@ -37,22 +38,38 @@ public class GameController : MonoBehaviour
     
     private void Update()
     {
-        if(gameState != GameState.NotStarted)
-            return;
-        
-        if (playerController.GameStartPressed)
+        //check if game is not started and whether the player has pressed space bar to start the game
+        if (gameState == GameState.NotStarted && playerController.GameStartPressed)
         {
             GameStart();
             gameState = GameState.Play;
         }
 
+        // check the remaining time 
+        if (gameState == GameState.Play && timer.IsGameOver)
+        {
+            GameEnd();
+            gameState = GameState.GameOver;
+        }
+
+        if (gameState == GameState.GameOver)
+        {
+            //TODO restart game on player input
+        }
+
+    }
+
+    private void GameEnd()
+    {
+        playerController.enabled = false;
     }
 
     private void GameStart()
     {
         title.HideTitle();
         InvokeRepeating(nameof(SpawnItem), 0, spawnRate);
-        player.GetComponent<PlayerController>().enabled = true;
+        playerController.enabled = true;
+        timer.SetStartTime();
 
         foreach (var obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {

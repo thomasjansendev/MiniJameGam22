@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4404e2e08536b6418629a53908a131e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutoffTimeInSeconds: 60
+  cutoffTimeInSeconds: 15

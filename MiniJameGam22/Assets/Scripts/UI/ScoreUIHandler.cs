@@ -18,7 +18,7 @@ public class ScoreUIHandler : MonoBehaviour
     }
     private void Update()     
     {
-        _guiText.text = "Score: " + _chestContent.ItemQuantityInChest;
+        _guiText.text = _chestContent.ItemQuantityInChest.ToString();
     }
     
 }
