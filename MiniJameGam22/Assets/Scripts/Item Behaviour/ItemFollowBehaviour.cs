@@ -80,5 +80,6 @@ public class ItemFollowBehaviour : MonoBehaviour
         _playerDetected = false;
         var dir = (Vector2)(Quaternion.Euler(0, 0, Rand.Between(0, 360)) * Vector2.up);
         _itemRigidbody.AddForce(dir * scatterForce);
+        GetComponent<ItemSounds>().PlayScatter();
     }
 }

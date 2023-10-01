@@ -17,6 +17,10 @@ public class ChestContentManager : MonoBehaviour
         print(other.gameObject.name);
         var cartContentManager = other.gameObject.GetComponent<CartContentManager>();
         _itemQuantityInCart = cartContentManager.ItemCountInCart;
+        if (_itemQuantityInCart != 0)
+        {
+            GetComponent<AudioSource>().Play();
+        }
         ItemQuantityInChest += _itemQuantityInCart;
         cartContentManager.EmptyCart();
         print("item quantity in chest: " + ItemQuantityInChest);
