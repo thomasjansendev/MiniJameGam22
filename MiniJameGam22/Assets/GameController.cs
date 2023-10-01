@@ -40,8 +40,6 @@ public class GameController : MonoBehaviour
         SpawnStartItems();
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
-        title = GameObject.FindGameObjectWithTag("Title").GetComponent<Title>();
-        title.ShowTitle();
         scene = SceneManager.GetActiveScene();
         startScreenGUI.SetActive(true);
         scoreGUI.SetActive(false);
@@ -73,6 +71,7 @@ public class GameController : MonoBehaviour
 
     private void RestartGame()
     {
+        //print("restart game");
         SceneManager.LoadScene(scene.name);
     }
 
