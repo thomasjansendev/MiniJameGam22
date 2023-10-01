@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -25,6 +27,11 @@ public class GameController : MonoBehaviour
     private PlayerController playerController;
     [SerializeField] private Timer timer;
 
+    [SerializeField] private GameObject scoreGUI;
+    [SerializeField] private GameObject endGameGUI;
+
+    private Scene scene;
+    
     void Start()
     {
         gameState = GameState.NotStarted;
@@ -34,6 +41,7 @@ public class GameController : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         title = GameObject.FindGameObjectWithTag("Title").GetComponent<Title>();
         title.ShowTitle();
+        scene = SceneManager.GetActiveScene();
     }
     
     private void Update()
@@ -52,16 +60,16 @@ public class GameController : MonoBehaviour
             gameState = GameState.GameOver;
         }
 
-        if (gameState == GameState.GameOver)
+        if (gameState == GameState.GameOver && playerController.GameStartPressed)
         {
-            //TODO restart game on player input
+            RestartGame();
         }
 
     }
 
-    private void GameEnd()
+    private void RestartGame()
     {
-        playerController.enabled = false;
+        SceneManager.LoadScene(scene.name);
     }
 
     private void GameStart()
@@ -69,6 +77,7 @@ public class GameController : MonoBehaviour
         title.HideTitle();
         InvokeRepeating(nameof(SpawnItem), 0, spawnRate);
         playerController.enabled = true;
+        scoreGUI.SetActive(true);
         timer.SetStartTime();
 
         foreach (var obj in GameObject.FindGameObjectsWithTag("Enemy"))
@@ -76,6 +85,13 @@ public class GameController : MonoBehaviour
             obj.GetComponent<EnemyPathfinding>().target = PathfindingTarget.Waypointing;
         }
         print("Game Started");
+    }
+    
+    private void GameEnd()
+    {
+        endGameGUI.SetActive(true);
+        scoreGUI.SetActive(false);
+        playerController.GameStartPressed = false; //reset the button to start the game
     }
 
     private void SpawnStartItems()
