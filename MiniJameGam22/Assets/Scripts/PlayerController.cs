@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerStartPos;
     [NonSerialized] public bool movingToStartPos;
     
-    public bool GameStartPressed { get; private set; }
+    public bool GameStartPressed { get; set; }
 
 
     // Start is called before the first frame update
