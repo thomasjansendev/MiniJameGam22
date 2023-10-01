@@ -42,6 +42,8 @@ public class GameController : MonoBehaviour
         title = GameObject.FindGameObjectWithTag("Title").GetComponent<Title>();
         title.ShowTitle();
         scene = SceneManager.GetActiveScene();
+        scoreGUI.SetActive(false);
+        endGameGUI.SetActive(false);
     }
     
     private void Update()
