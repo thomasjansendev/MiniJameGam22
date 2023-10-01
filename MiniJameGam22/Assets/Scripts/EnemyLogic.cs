@@ -18,6 +18,7 @@ public class EnemyLogic : MonoBehaviour
             other.gameObject.GetComponent<PlayerController>().MovePlayerBackToStart();
             other.gameObject.GetComponentInChildren<CartContentManager>().EmptyCart();
             pathfinding.target = PathfindingTarget.Waypointing;
+            pathfinding.playedAudio = false;
             foreach (var obj in GameObject.FindGameObjectsWithTag("InCart"))
             {
                 obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Utilities;
 
 public enum PathfindingTarget
 {
@@ -14,6 +15,7 @@ public enum PathfindingTarget
 public class EnemyPathfinding : MonoBehaviour
 {
     public Transform transformTarget;
+    private AudioSource audioSource;
     private NavMeshAgent agent;
     private GameObject player;
     private List<GameObject> waypoints = new();
@@ -26,9 +28,11 @@ public class EnemyPathfinding : MonoBehaviour
     public PathfindingTarget target = PathfindingTarget.Undefined;
     private bool delaySwitching;
     private WorldPoints points;
+    public bool playedAudio;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         player = GameObject.FindGameObjectWithTag("Player");
         points = GameObject.FindGameObjectWithTag("GameController").GetComponent<WorldPoints>();
         agent = GetComponent<NavMeshAgent>();
@@ -109,6 +113,8 @@ public class EnemyPathfinding : MonoBehaviour
         if ((transform.position - transformTarget.position).magnitude > enemyLostSightMag)
         {
             target = PathfindingTarget.Waypointing;
+            playedAudio = false;
+            print("reset status");
         }
     }
 
@@ -142,6 +148,12 @@ public class EnemyPathfinding : MonoBehaviour
             if (hit.collider.CompareTag("Player"))
             {
                 target = PathfindingTarget.Player;
+                if (!playedAudio)
+                {
+                    audioSource.pitch = Rand.Between(0.5f, 1.5f);
+                    audioSource.Play();
+                    playedAudio = true;
+                }
             }
         }
 
