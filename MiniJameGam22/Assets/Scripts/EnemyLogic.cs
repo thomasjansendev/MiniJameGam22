@@ -25,9 +25,10 @@ public class EnemyLogic : MonoBehaviour
                 if (i == 0)
                 {
                     i++;
-                    obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();
+                    obj.GetComponentInParent<ItemFollowBehaviour>().PlayScatterNoise();
                 }
 
+                obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();
                 obj.GetComponent<ItemCollisionHandler>().alreadyAddedToBasket = false;
             }
             // TODO maybe freeze enemies while you go back to start pos to look cool?

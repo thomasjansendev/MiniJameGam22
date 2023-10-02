@@ -11,6 +11,7 @@ public class ItemFollowBehaviour : MonoBehaviour
     [FormerlySerializedAs("_playerDetected")] public bool _itemDetectedPlayer;
     private CapsuleCollider2D _collider;
     private GameController _gameController;
+    private bool delayFollowPlayer;
 
     private void Start()
     {
@@ -63,7 +64,10 @@ public class ItemFollowBehaviour : MonoBehaviour
             return;
 
         _playerTransform = other.transform; //to use in the MoveTowardsPlayer() method
-        _itemDetectedPlayer = true;
+        if (!delayFollowPlayer)
+        {
+            _itemDetectedPlayer = true;
+        }
     }
 
     private void MoveTowardsPlayer()
@@ -78,8 +82,13 @@ public class ItemFollowBehaviour : MonoBehaviour
     public void Scatter()
     {
         _itemDetectedPlayer = false;
+        Delay.Method(() => delayFollowPlayer = false, 1f);
         var dir = (Vector2)(Quaternion.Euler(0, 0, Rand.Between(0, 360)) * Vector2.up);
         _itemRigidbody.AddForce(dir * scatterForce);
+    }
+
+    public void PlayScatterNoise()
+    {
         GetComponent<ItemSounds>().PlayScatter();
     }
 }

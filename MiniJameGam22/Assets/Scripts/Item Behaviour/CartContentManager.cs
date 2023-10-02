@@ -20,16 +20,16 @@ public class CartContentManager : MonoBehaviour
     {
         ItemCountInCart++;
         _rb.mass += massModifier;
-        print("# items in cart: " + ItemCountInCart);
-        print("mass of cart: " + _rb.mass);
+        // print("# items in cart: " + ItemCountInCart);
+        // print("mass of cart: " + _rb.mass);
     }
     
     public void EmptyCart()
     {
         ItemCountInCart = 0;
         _rb.mass = _initMass;
-        print("# items in cart: " + ItemCountInCart);
-        print("mass of cart: " + _rb.mass);
+        // print("# items in cart: " + ItemCountInCart);
+        // print("mass of cart: " + _rb.mass);
     }
     
 }
