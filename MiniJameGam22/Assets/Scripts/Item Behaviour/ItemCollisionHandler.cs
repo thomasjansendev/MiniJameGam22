@@ -13,7 +13,7 @@ namespace Item_Behaviour
             if (!alreadyAddedToBasket)
             {
                 other.gameObject.GetComponent<CartContentManager>().AddItemToCart();
-                alreadyAddedToBasket = true;
+                alreadyAddedToBasket = true; // does this get reset when objects are scattered ?
                 GetComponent<CapsuleCollider2D>().isTrigger = false;
                 gameObject.tag = "InCart";
                 GetComponentInParent<ItemSounds>().PlayPickup();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 using Utilities;
 
 public class ItemFollowBehaviour : MonoBehaviour
@@ -7,7 +8,7 @@ public class ItemFollowBehaviour : MonoBehaviour
     [SerializeField] private float scatterForce;
     private Rigidbody2D _itemRigidbody;
     private Transform _playerTransform;
-    public bool _playerDetected;
+    [FormerlySerializedAs("_playerDetected")] public bool _itemDetectedPlayer;
     private CapsuleCollider2D _collider;
     private GameController _gameController;
 
@@ -15,7 +16,7 @@ public class ItemFollowBehaviour : MonoBehaviour
     {
         _gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         _itemRigidbody = GetComponent<Rigidbody2D>();
-        _playerDetected = false;
+        _itemDetectedPlayer = false;
         _collider = GetComponentInChildren<CapsuleCollider2D>();
     }
 
@@ -23,7 +24,7 @@ public class ItemFollowBehaviour : MonoBehaviour
     {
         MoveTowardsPlayer();
         CheckIfStuckInWall();
-        if (_playerDetected)
+        if (_itemDetectedPlayer)
         {
             transform.GetChild(0).tag = "InCart";
         }
@@ -35,7 +36,7 @@ public class ItemFollowBehaviour : MonoBehaviour
 
     private void CheckIfStuckInWall()
     {
-        if (_playerDetected && (transform.position - _playerTransform.position).magnitude > 2f)
+        if (_itemDetectedPlayer && (transform.position - _playerTransform.position).magnitude > 2f)
         {
             if (_collider != null)
             {
@@ -57,18 +58,17 @@ public class ItemFollowBehaviour : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
+        
         if (other.gameObject.GetComponent<PlayerController>().movingToStartPos)
-        {
             return;
-        }
 
-        _playerTransform = other.transform;
-        _playerDetected = true;
+        _playerTransform = other.transform; //to use in the MoveTowardsPlayer() method
+        _itemDetectedPlayer = true;
     }
 
     private void MoveTowardsPlayer()
     {
-        if (!_playerDetected || _gameController.gameState != GameState.Play)
+        if (!_itemDetectedPlayer || _gameController.gameState != GameState.Play)
             return;
 
         Vector2 moveDir = _playerTransform.position - transform.position;
@@ -77,7 +77,7 @@ public class ItemFollowBehaviour : MonoBehaviour
 
     public void Scatter()
     {
-        _playerDetected = false;
+        _itemDetectedPlayer = false;
         var dir = (Vector2)(Quaternion.Euler(0, 0, Rand.Between(0, 360)) * Vector2.up);
         _itemRigidbody.AddForce(dir * scatterForce);
         GetComponent<ItemSounds>().PlayScatter();
