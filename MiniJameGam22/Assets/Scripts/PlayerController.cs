@@ -130,12 +130,12 @@ public class PlayerController : MonoBehaviour
     void OnQuit()
     {
         // def allows this to work in the editor or in regular game
-#if UNITY_STANDALONE
-        Application.Quit();
-#endif
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+    #if UNITY_STANDALONE
+            Application.Quit();
+    #endif
+    #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+    #endif
     }
 
     #endregion

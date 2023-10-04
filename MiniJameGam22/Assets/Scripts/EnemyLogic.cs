@@ -29,7 +29,7 @@ public class EnemyLogic : MonoBehaviour
                 }
 
                 obj.GetComponentInParent<ItemFollowBehaviour>().Scatter();
-                obj.GetComponent<ItemCollisionHandler>().alreadyAddedToBasket = false;
+                obj.GetComponent<ItemCollisionHandler>().alreadyAddedToBasket = false; 
             }
             // TODO maybe freeze enemies while you go back to start pos to look cool?
         }
