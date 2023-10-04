@@ -282,6 +282,8 @@ MonoBehaviour:
   enemyLostSightMag: 6
   target: 2
   playedAudio: 0
+  waypointingSpeed: 3
+  chasingPlayerSpeed: 4
 --- !u!195 &-5051648538744269678
 NavMeshAgent:
   m_ObjectHideFlags: 0

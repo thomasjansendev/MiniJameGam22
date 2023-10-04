@@ -27,6 +27,8 @@ public class EnemyPathfinding : MonoBehaviour
     public PathfindingTarget target = PathfindingTarget.Waypointing;
     private WorldPoints points;
     public bool playedAudio;
+    [SerializeField] private float waypointingSpeed = 5;
+    [SerializeField] private float chasingPlayerSpeed = 7;
 
     private void Start()
     {
@@ -36,6 +38,23 @@ public class EnemyPathfinding : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.updateUpAxis = false;
         // GenerateWaypoints();
+    }
+    
+    void FixedUpdate()
+    {
+        agent.SetDestination(ChooseTarget().position);
+        FaceTarget();
+        if (target == PathfindingTarget.Waypointing)
+        {
+            agent.speed = waypointingSpeed;
+            TrySwitchWaypoint();
+        }
+
+        if (target == PathfindingTarget.Player)
+        {
+            agent.speed = chasingPlayerSpeed; 
+            TryLoseSightOfPlayer();
+        }
     }
 
 
@@ -114,25 +133,10 @@ public class EnemyPathfinding : MonoBehaviour
             print("reset status");
         }
     }
-
-    void FixedUpdate()
-    {
-        agent.SetDestination(ChooseTarget().position);
-        FaceTarget();
-        if (target == PathfindingTarget.Waypointing)
-        {
-            TrySwitchWaypoint();
-        }
-
-        if (target == PathfindingTarget.Player)
-        {
-            TryLoseSightOfPlayer();
-        }
-    }
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // this took soooooo long
+        // this took soooooo long <- lol
         Vector3 dir = (other.transform.position - transform.position).normalized;
         RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, dir, 20);
         foreach (RaycastHit2D hit in hits)
