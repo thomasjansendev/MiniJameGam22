@@ -47,11 +47,11 @@ public class ItemFollowBehaviour : MonoBehaviour
         }
     }
 
-    private void ResetCollider()
+    private void ResetCollider() // <- TODO no longer useful, consider removing
     {
         if (_collider != null)
         {
-            _collider.isTrigger = false;
+            //_collider.isTrigger = false;
         }
     }
 

@@ -11,9 +11,10 @@ namespace Item_Behaviour
         private void Update()
         {
             // jank as f**k fix to a problem I don't understand:
-            // the collider keeps getting changed to isTrigger = false when colliding with the player
+            // the collider keeps getting changed to isTrigger = false when colliding with the
+            // player
             // and I don't know why
-            GetComponent<CapsuleCollider2D>().isTrigger = true;  
+            //GetComponent<CapsuleCollider2D>().isTrigger = true;  
         }
 
         private void OnTriggerEnter2D(Collider2D other)
